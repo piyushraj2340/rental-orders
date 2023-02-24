@@ -19,7 +19,7 @@ const Transition = (props) => {
     } else {
         render = (
             <>
-                <div className="col-5 border p-5">
+                <div className="col-sm-8 col-lg-5 border p-5">
                     <div className="mb-3 mt-3">
                         <label for="cardPin" className="form-label">Enter Card Pin:</label>
                         <input type="number" className="form-control" id="cardPin" placeholder="Enter Card Pin" name="cardPin" onChange={(e) => { props.setPin(e.target.value) }} />

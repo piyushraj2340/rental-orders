@@ -3,7 +3,7 @@ import React from 'react'
 
 const CustomerDetail = (props) => {
     return (
-        <> <div className="col ps-5">
+        <> <div className="col p-2">
             <div className="row d-flex justify-content-center">
                 <div className="col p-5 border">
                     <form method='post'>

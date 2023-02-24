@@ -82,7 +82,7 @@ const Payment = (props) => {
     return (
         <>
             {placeOrder &&
-                <div className='bg-dark row d-flex justify-content-center align-content-center' style={{ width: "100%", minHeight: "100vh", position: "fixed", top: "0", left: "0", zIndex: 1 }}>
+                <div className='bg-dark row d-flex justify-content-center align-content-center m-0' style={{ width: "100%", minHeight: "100vh", position: "fixed", top: "0", left: "0", zIndex: 1 }}>
                     <div class="alert alert-success col-md-4" style={{height: "100%"}}>
                         <strong>✔ Order Done!</strong> through {paymentMode.mode} Payments.
                     </div>
@@ -103,7 +103,7 @@ const Payment = (props) => {
                     
                 </div>}
 
-            <div className="col ps-5">
+            <div className="col p-3">
                 <div className="row mt-2">
                     <div className="col-md-4 col-lg-3  border p-3">
                         <h6 className='text-center'>Chose your Payment</h6>
@@ -112,7 +112,7 @@ const Payment = (props) => {
                             <button onClick={() => { setActivePayment("online") }} className="btn btn-light" disabled={paymentMode.status}>Online</button>
                         </div>
                     </div>
-                    <div className="col-md-8 col-lg-9 p-5 border">
+                    <div className="col-md-8 col-lg-9 p-2 border">
                         <p className="text-muted ms-3" style={{ fontSize: "14px", margin: "0" }}>{activePayment !== "" && "payment mode"}</p>
                         <p className="card-text ms-3">{(activePayment === "online-payment") ? "online" : activePayment}{activePayment === "" && "Select Your Payment"}</p>
                         {
@@ -131,7 +131,7 @@ const Payment = (props) => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className='col d-flex justify-content-between ms-5 me-5'>
+                    <div className='col d-flex justify-content-between m-2'>
                         <button className='btn btn-primary' onClick={handlePaymentPrevious}>Previous</button>
                         <button className='btn btn-primary' onClick={handlePaymentSubmit} disabled={!paymentMode.status}>Place Order</button>
                     </div>

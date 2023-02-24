@@ -4,7 +4,7 @@ import { Rating } from 'react-simple-star-rating';
 const OrderSummary = (props) => {
     return (
         <>
-            <div className="col ps-5">
+            <div className="col p-2">
                 <div className="row d-flex justify-content-center">
                     <div className="col-lg-5 p-5 border">
                         <h4>{props.data.productName}</h4>
@@ -20,7 +20,7 @@ const OrderSummary = (props) => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <div className='col d-flex justify-content-between ms-5 me-5'>
+                    <div className='col d-flex justify-content-between m-2'>
                         <button className='btn btn-primary disabled'>Previous</button>
                         <button className='btn btn-primary' onClick={props.handleSummaryNext}>Next</button>
                     </div>
