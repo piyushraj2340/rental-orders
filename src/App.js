@@ -9,7 +9,9 @@ import Product from "./Components/Product";
 import PageNotFound from "./Components/Error404";
 import PlaceOrder from "./Components/PlaceOrder";
 import { useState } from "react";
-import Card from "./Components/Card";
+import Success from "./Components/Success";
+import Cancel from "./Components/Cancel";
+// import Card from "./Components/Card";
 
 
 const Routing = (props) => {
@@ -18,7 +20,9 @@ const Routing = (props) => {
       <Route exact path="/" element={<Home />} />
       <Route exact path="/home" element={<Home />} />
       <Route exact path="/products" element={<Products />} />
-      <Route exact path="/cards" element={<Card />} />
+      {/* <Route exact path="/cards" element={<Card />} /> */}
+      <Route exact path="/success" element={<Success />} />
+      <Route exact path="/cancel" element={<Cancel />} />
       <Route exact path="/products/:id" element={<Product setProduct={props.setProduct}/>} />
       <Route exact path="/order-summary/:id" element={<PlaceOrder product={props.product} setProduct={props.setProduct}/>} />
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import card from '../API/card'
+import card from '../../API/card'
 
 
 const Card = () => {

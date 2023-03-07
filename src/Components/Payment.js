@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
+// import { useNavigate } from 'react-router-dom';
 // import card from '../API/card';
 // import OnlineTransition from './OnlineTransition';
 // import OnlineMode from './OnlineMode';
 import { Rating } from 'react-simple-star-rating';
 
 const Payment = (props) => {
+    // const navigate = useNavigate();
     const [activePayment, setActivePayment] = useState("");
     const [placeOrder, setPlaceOrder] = useState(false);
 
@@ -17,6 +19,10 @@ const Payment = (props) => {
         status: false,
         message: ""
     });
+    
+    const [transitionAnimation, setTransitionAnimation] = useState(false);
+
+
 
     // const [onlinePayment, setOnlinePayment] = useState({
     //     cardName: "",
@@ -54,7 +60,7 @@ const Payment = (props) => {
     //     }
     // }
 
-    let renderPayment = <></>;
+    // let renderPayment = <></>;
     // if (activePayment === "online") {
     //     renderPayment = <OnlineMode handlePaymentInput={handlePaymentInput} activePayment={activePayment} setActivePayment={setActivePayment} handleOnlinePayment={handleOnlinePayment} />
     // } else if (activePayment === "online-payment") {
@@ -72,6 +78,7 @@ const Payment = (props) => {
 
     const handleOnlinePayment = async () => {
         setActivePayment("online");
+        setTransitionAnimation(true);
 
         const paymentInfo = {
             ...props.data,
@@ -88,11 +95,11 @@ const Payment = (props) => {
         const result = await res.json();
 
         if(result.status) {
-            window.open(result.link)
+            window.open(result.link,"_self");
         } else {
             setPaymentError(true,result.message);
         }
-
+        setTransitionAnimation(false);
     }
 
     const handlePaymentPrevious = () => {
@@ -152,7 +159,19 @@ const Payment = (props) => {
                                 <strong>Payment Successful!</strong> through {paymentMode.mode}.
                             </div>
                         }
-                        {!paymentMode.status && renderPayment}
+                        {transitionAnimation && 
+                        <>
+                            <div className="spinner-grow text-muted"></div>
+                            <div className="spinner-grow text-primary"></div>
+                            <div className="spinner-grow text-success"></div>
+                            <div className="spinner-grow text-info"></div>
+                            <div className="spinner-grow text-warning"></div>
+                            <div className="spinner-grow text-danger"></div>
+                            <div className="spinner-grow text-secondary"></div>
+                            <div className="spinner-grow text-dark"></div>
+                            <div className="spinner-grow text-light"></div>
+                        </>
+                        }
                     </div>
                 </div>
                 <div className="row mt-3">
