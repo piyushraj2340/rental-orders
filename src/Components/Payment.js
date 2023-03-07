@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import card from '../API/card';
-import OnlineTransition from './OnlineTransition';
-import OnlineMode from './OnlineMode';
+// import card from '../API/card';
+// import OnlineTransition from './OnlineTransition';
+// import OnlineMode from './OnlineMode';
 import { Rating } from 'react-simple-star-rating';
 
 const Payment = (props) => {
@@ -18,50 +18,50 @@ const Payment = (props) => {
         message: ""
     });
 
-    const [onlinePayment, setOnlinePayment] = useState({
-        cardName: "",
-        cardNumber: "",
-        cardCVV: "",
-        cardExpire: "",
-        cardRemember: false
-    });
+    // const [onlinePayment, setOnlinePayment] = useState({
+    //     cardName: "",
+    //     cardNumber: "",
+    //     cardCVV: "",
+    //     cardExpire: "",
+    //     cardRemember: false
+    // });
 
 
 
-    const handlePaymentInput = (e) => {
-        let name, value;
-        if (e.target.type === 'text' || e.target.type === 'number' || e.target.type === 'month') {
-            name = e.target.name;
-            value = e.target.value;
-        } else {
-            name = e.target.name;
-            value = e.target.checked;
-        }
-        setOnlinePayment({ ...onlinePayment, [name]: value })
-    }
+    // const handlePaymentInput = (e) => {
+    //     let name, value;
+    //     if (e.target.type === 'text' || e.target.type === 'number' || e.target.type === 'month') {
+    //         name = e.target.name;
+    //         value = e.target.value;
+    //     } else {
+    //         name = e.target.name;
+    //         value = e.target.checked;
+    //     }
+    //     setOnlinePayment({ ...onlinePayment, [name]: value })
+    // }
 
 
-    const handleOnlinePayment = (e) => {
-        e.preventDefault(e);
-        if (onlinePayment.cardNumber === card.cardNumber && onlinePayment.cardCVV === card.cardCVV && onlinePayment.cardExpire === card.cardExpire) {
-            setActivePayment("online-payment");
-            setPaymentError(false);
-        } else {
-            setPaymentError({
-                status: true,
-                message: "Card Detail"
-            });
-        }
-    }
+    // const handleOnlinePayment = (e) => {
+    //     e.preventDefault(e);
+    //     if (onlinePayment.cardNumber === card.cardNumber && onlinePayment.cardCVV === card.cardCVV && onlinePayment.cardExpire === card.cardExpire) {
+    //         setActivePayment("online-payment");
+    //         setPaymentError(false);
+    //     } else {
+    //         setPaymentError({
+    //             status: true,
+    //             message: "Card Detail"
+    //         });
+    //     }
+    // }
 
-    let renderPayment;
-    if (activePayment === "online") {
-        renderPayment = <OnlineMode handlePaymentInput={handlePaymentInput} activePayment={activePayment} setActivePayment={setActivePayment} handleOnlinePayment={handleOnlinePayment} />
-    } else if (activePayment === "online-payment") {
-        renderPayment = <OnlineTransition setPaymentMode={setPaymentMode} paymentError={paymentError} setPaymentError={setPaymentError} card={card} />
-    } else {
-        renderPayment = <></>
-    }
+    let renderPayment = <></>;
+    // if (activePayment === "online") {
+    //     renderPayment = <OnlineMode handlePaymentInput={handlePaymentInput} activePayment={activePayment} setActivePayment={setActivePayment} handleOnlinePayment={handleOnlinePayment} />
+    // } else if (activePayment === "online-payment") {
+    //     renderPayment = <OnlineTransition setPaymentMode={setPaymentMode} paymentError={paymentError} setPaymentError={setPaymentError} card={card} />
+    // } else {
+    //     renderPayment = <></>
+    // }
 
     // if(placeOrder) {
     //     console.log(placeOrder);
@@ -69,6 +69,31 @@ const Payment = (props) => {
 
     //     )
     // }
+
+    const handleOnlinePayment = async () => {
+        setActivePayment("online");
+
+        const paymentInfo = {
+            ...props.data,
+            ...props.user
+        }
+        const res = await fetch("/payments", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(paymentInfo)
+        })
+
+        const result = await res.json();
+
+        if(result.status) {
+            window.open(result.link)
+        } else {
+            setPaymentError(true,result.message);
+        }
+
+    }
 
     const handlePaymentPrevious = () => {
         props.setActiveForm(1)
@@ -83,7 +108,7 @@ const Payment = (props) => {
         <>
             {placeOrder &&
                 <div className='bg-dark row d-flex justify-content-center align-content-center m-0' style={{ width: "100%", minHeight: "100vh", position: "fixed", top: "0", left: "0", zIndex: 1 }}>
-                    <div class="alert alert-success col-md-4" style={{height: "100%"}}>
+                    <div class="alert alert-success col-md-4" style={{ height: "100%" }}>
                         <strong>✔ Order Done!</strong> through {paymentMode.mode} Payments.
                     </div>
                     <div className="row text-light d-flex justify-content-center">
@@ -100,7 +125,7 @@ const Payment = (props) => {
                             <p className="card-text">{props.user.customerAddress}</p>
                         </div>
                     </div>
-                    
+
                 </div>}
 
             <div className="col p-3">
@@ -109,7 +134,7 @@ const Payment = (props) => {
                         <h6 className='text-center'>Chose your Payment</h6>
                         <div className="btn-group-vertical d-flex">
                             <button onClick={() => { setActivePayment("COD"); setPaymentMode({ status: true, mode: "COD" }) }} className={`btn btn-light`} disabled={paymentMode.status}>Cash On Delivery</button>
-                            <button onClick={() => { setActivePayment("online") }} className="btn btn-light" disabled={paymentMode.status}>Online</button>
+                            <button onClick={handleOnlinePayment} className="btn btn-light" disabled={paymentMode.status}>Online</button>
                         </div>
                     </div>
                     <div className="col-md-8 col-lg-9 p-2 border">
